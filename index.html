@@ -86,6 +86,7 @@ main { max-width: 60rem; margin: 0 auto; padding: 2.5rem max(1.25rem, env(safe-a
 </p>
 <section class="wgq-sec">
 <h3>Which game is this network playing?</h3>
+<p class="wgq-lede">The MIT researchers show that <a href="https://openai.com/index/gpt-6-astra/">GPT-6 Astra</a>, OpenAI's latest frontier LLM could name the game a small neural network had learned to play, from nothing but its raw weights (the strength of connections between nodes in the network). Here is the same evidence, drawn as pictures. Try it yourself and see how you do. The LLMs manage to name all 4 real games and don't get fooled by the scrambled non-game.</p>
 <p class="wgq-lede">Each network learned to play one of four Atari-style games on a 10&nbsp;×&nbsp;10 board. For every cell of the board we show how big its first-layer weights are, one map per input channel; darker means bigger. Cells that never mattered in training stay pale, so each map is close to a record of where things appeared. One of the five is a scrambled control.</p>
 <div class="wgq-q">
 <p class="wgq-qlabel">Network 1</p>
@@ -122,7 +123,7 @@ main { max-width: 60rem; margin: 0 auto; padding: 2.5rem max(1.25rem, env(safe-a
 
 <section class="wgq-sec">
 <h3>Three games nobody has seen before</h3>
-<p class="wgq-lede">We invented three new games, so no model could have read about them, and trained a network on each. Match the network to the game.</p>
+<p class="wgq-lede">We invented three new games, so no model could have read about them, and trained a network on each. Match the network to the game. In these new games, the LLMs can guess the structure but struggle to identify the dynamics.</p>
 <div class="wgq-q">
 <p class="wgq-qlabel">Mystery game 1</p>
 <div class="wgq-map"><img src="images/weights-6.png" width="1081" height="249" loading="lazy" decoding="async" alt="First-layer weight maps for mystery game 1, one panel per input channel" width="1000"></div>
