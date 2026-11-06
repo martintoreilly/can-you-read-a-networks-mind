@@ -7,8 +7,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Can you read a network’s mind?">
 <meta property="og:description" content="An AI model named the game a small network had learned from nothing but its raw weights. Here is the same evidence, drawn as pictures. Can you do it too?">
-<!-- Social preview: replace USERNAME/REPO with your GitHub Pages address so link previews show the image. -->
-<meta property="og:image" content="https://USERNAME.github.io/REPO/images/social-preview.png">
+<meta property="og:image" content="https://martintoreilly.github.io/can-you-read-a-networks-mind/images/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E">
 <title>Can you read a network’s mind?</title>
@@ -48,7 +47,8 @@ main { max-width: 60rem; margin: 0 auto; padding: 2.5rem max(1.25rem, env(safe-a
   color: inherit; width: 100%; max-width: none; margin: 0; }
 .wgq.wgq *, .wgq.wgq *::before, .wgq.wgq *::after { box-sizing: border-box; }
 .wgq.wgq .wgq-title { font-size: 2.4em; line-height: 1.1; margin: 0 0 .5em; color: inherit; }
-.wgq.wgq .wgq-intro { font-size: 1.2em; margin: 0; }
+.wgq.wgq .wgq-intro { font-size: 1em; margin: 0 0 1em; }
+.wgq.wgq .wgq-intro a, .wgq.wgq .wgq-lede a { color: inherit; text-decoration: underline; text-underline-offset: .15em; }
 .wgq.wgq .wgq-sec { margin: 2.5em 0; padding: 0; }
 .wgq.wgq .wgq-sec h3 { font-size: 1.6em; line-height: 1.2; margin: 0 0 .5em; color: inherit; }
 .wgq.wgq .wgq-lede { margin: 0 0 1.25em; }
@@ -75,19 +75,27 @@ main { max-width: 60rem; margin: 0 auto; padding: 2.5rem max(1.25rem, env(safe-a
 .wgq.wgq .wgq-revealed .wgq-score { font-size: 1.25em; font-weight: 700; color: var(--wgq-accent); }
 .wgq.wgq .wgq-reset { background: var(--wgq-paper); }
 .wgq.wgq .wgq-credit { font-size: .8em; margin: 1.5em 0 0; }
+.wgq.wgq .wgq-games-wrap { border-top: 1px solid var(--wgq-line); padding: 1.5em 0; }
+.wgq.wgq .wgq-games-scroll { overflow-x: auto; padding: 0 .5em; }
+.wgq.wgq .wgq-games { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 1.5em; row-gap: 0; min-width: 34rem; }
+.wgq.wgq .wgq-games.wgq-games-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 1.25em; }
+.wgq.wgq .wgq-note { margin: 1.25em 0 0; font-style: italic; }
+.wgq.wgq .wgq-game { margin: 0; padding: 0; display: grid; grid-row: span 3; grid-template-rows: subgrid; align-content: start; }
+.wgq.wgq .wgq-game-name { align-self: end; }
+.wgq.wgq .wgq-game-name { margin: 0 0 .5em; }
+.wgq.wgq .wgq-game img { display: block; width: 100%; max-width: 100%; height: auto; margin: 0; border: 0; border-radius: 6px; }
+.wgq.wgq .wgq-game figcaption { margin: .6em 0 0; font-size: .9em; line-height: 1.45; }
 @media (max-width: 40em) { .wgq.wgq .wgq-title { font-size: 1.8em; } .wgq.wgq .wgq-sec h3 { font-size: 1.35em; } }
 </style>
 <h2 class="wgq-title">Can you read a network’s mind?</h2>
-<p class="wgq-lede">
-    Researchers at MIT's CSAIL lab recently <a href="https://rikiyat.github.io/blog/weight-space-programming/">posted some intriguing early experiments</a> on something they are calling <em>weight-space programming, </em>where a large language model (LLM), a particular type of extremely large <em>neural network,</em> directly reads, writes and edits much smaller neural networks. These experiments became the main topic of lunchtime conversation for several of us at Turing this week, and we've shared some of our initial thoughts in a <a href="https://www.turing.ac.uk/news/publications/replicating-weight-space-programming-writing-and-reading-neural-network-weights"><em>working note</em></a><em>.</em>
-</p>
-<p class="wgq-lede">
-    One of the things we did to try and understand what was and was not surprising about the LLM's ability to read and write neural network structures was to visualise the network information the LLM was being provided for the "guess the computer game" experiment (experiment 1 in the MIT blog post). We've turned this into an interactive demo you can try out yourself to get a feel for how hard you think the task is.
-</p>
+<p class="wgq-intro">Researchers at MIT’s CSAIL lab recently <a href="https://rikiyat.github.io/blog/weight-space-programming/">posted some intriguing early experiments</a> on something they are calling weight-space programming, where a large language model (LLM), a particular type of extremely large neural network, directly reads, writes and edits much smaller neural networks. These experiments became the main topic of lunchtime conversation for several of us at Turing this week, and we’ve shared some of our initial thoughts in a <a href="https://www.turing.ac.uk/news/publications/replicating-weight-space-programming-writing-and-reading-neural-network-weights">working note</a>.</p>
+<p class="wgq-intro">One of the things we did to try and understand what was and was not surprising about the LLM’s ability to read and write neural network structures was to visualise the network information the LLM was being provided for the “guess the computer game” experiment (experiment 1 in the MIT blog post). We’ve turned this into an interactive demo you can try out yourself to get a feel for how hard you think the task is.</p>
+
 <section class="wgq-sec">
 <h3>Which game is this network playing?</h3>
-<p class="wgq-lede">The MIT researchers show that <a href="https://openai.com/index/gpt-6-astra/">GPT-6 Astra</a>, OpenAI's latest frontier LLM could name the game a small neural network had learned to play, from nothing but its raw weights (the strength of connections between nodes in the network). Here is the same evidence, drawn as pictures. Try it yourself and see how you do. The LLMs manage to name all 4 real games and don't get fooled by the scrambled non-game.</p>
+<p class="wgq-lede">The MIT researchers show that <a href="https://openai.com/index/gpt-6-astra/">GPT-6 Astra</a>, OpenAI’s latest frontier LLM could name the game a small neural network had learned to play, from nothing but its raw weights (the strength of connections between nodes in the network). Here is the same evidence, drawn as pictures. Try it yourself and see how you do. The LLMs manage to name all 4 real games and don’t get fooled by the scrambled non-game.</p>
 <p class="wgq-lede">Each network learned to play one of four Atari-style games on a 10&nbsp;×&nbsp;10 board. For every cell of the board we show how big its first-layer weights are, one map per input channel; darker means bigger. Cells that never mattered in training stay pale, so each map is close to a record of where things appeared. One of the five is a scrambled control.</p>
+<div class="wgq-games-wrap"><p class="wgq-qlabel">The game choices</p><div class="wgq-games-scroll"><div class="wgq-games wgq-games-4"><figure class="wgq-game"><p class="wgq-game-name"><strong>Breakout</strong></p><img src="images/demo-breakout.gif" alt="Animated demo of Breakout: a blue paddle at the bottom bounces an orange ball up at two rows of green blocks." width="400" height="456" loading="lazy" decoding="async"><figcaption>You control a paddle at the bottom of the screen, bouncing a ball at rows of blocks at the top of the screen to destroy them and “break out”. You score points for each block you destroy.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Pong</strong></p><img src="images/demo-pong.gif" alt="Animated demo of Pong: two paddles on the left and right edges bounce an orange ball between them." width="400" height="456" loading="lazy" decoding="async"><figcaption>You control a paddle on one side of the screen, the computer controls the other. You bounce a ball between you, scoring points if you get the ball past the computer’s paddle.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Pac-Man</strong></p><img src="images/demo-pacman.gif" alt="Animated demo of Pac-Man: a yellow player moves through a maze of green food dots while red enemies chase it." width="400" height="456" loading="lazy" decoding="async"><figcaption>You move around a fixed maze, eating food strewn around the maze while avoiding enemies controlled by the computer. You score points for each piece of food you eat before you hit an enemy.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Freeway</strong></p><img src="images/demo-freeway.gif" alt="Animated demo of Freeway: a blue player at the bottom tries to cross lanes of red cars to reach the green strip at the top." width="400" height="456" loading="lazy" decoding="async"><figcaption>You are trying to cross a busy horizontal road with multiple lanes of busy traffic moving left to right. You start at the bottom of the screen and score points if you reach the top without getting hit by traffic.</figcaption></figure></div></div><p class="wgq-note">Game orders below have been randomised</p></div>
 <div class="wgq-q">
 <p class="wgq-qlabel">Network 1</p>
 <div class="wgq-map"><img src="images/weights-1.png" width="1000" height="235" decoding="async" alt="First-layer weight maps for network 1, one panel per input channel" width="1000"></div>
@@ -124,22 +132,23 @@ main { max-width: 60rem; margin: 0 auto; padding: 2.5rem max(1.25rem, env(safe-a
 <section class="wgq-sec">
 <h3>Three games nobody has seen before</h3>
 <p class="wgq-lede">We invented three new games, so no model could have read about them, and trained a network on each. Match the network to the game. In these new games, the LLMs can guess the structure but struggle to identify the dynamics.</p>
+<div class="wgq-games-wrap"><p class="wgq-qlabel">The game choices</p><div class="wgq-games-scroll"><div class="wgq-games"><figure class="wgq-game"><p class="wgq-game-name"><strong>Reverse space invaders</strong></p><img src="images/demo-reverse-space-invaders.gif" alt="Animated demo of Reverse space invaders: a round asteroid falls down an 8 by 8 grid towards a yellow triangular ship at the bottom." width="400" height="456" loading="lazy" decoding="async"><figcaption>In a reversal of roles, you play the asteroids, trying to hit the planet surface while avoiding the missiles being shot up by the defending space ship. You score points for each asteroid that hits the ground without getting shot.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Whac-a-mole</strong></p><img src="images/demo-whac-a-mole.gif" alt="Animated demo of Whac-a-mole: a small square hammer moves around a grid of nine holes as moles pop up." width="400" height="456" loading="lazy" decoding="async"><figcaption>You move a hammer around to hit the moles popping up out of one of several holes, scoring points for each mole you hit.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Middle-row shooter</strong></p><img src="images/demo-middle-row-shooter.gif" alt="Animated demo of Middle-row shooter: a blue square moves along the middle row of the grid, shooting at targets diving from above and below." width="400" height="456" loading="lazy" decoding="async"><figcaption>You play a spaceship moving left and right in the middle of the screen, shooting at enemies diving at you from above and below, scoring points for each enemy you hit before an enemy crashes into you.</figcaption></figure></div></div><p class="wgq-note">Game orders below have been randomised</p></div>
 <div class="wgq-q">
 <p class="wgq-qlabel">Mystery game 1</p>
 <div class="wgq-map"><img src="images/weights-6.png" width="1081" height="249" loading="lazy" decoding="async" alt="First-layer weight maps for mystery game 1, one panel per input channel" width="1000"></div>
-<div class="wgq-opts" role="group" aria-label="Your answer for Mystery game 1"><button type="button">Reverse Space Invaders with gravity</button><button type="button">Whac-A-Mole</button><button type="button">Middle-row shooter with diving targets</button></div>
+<div class="wgq-opts" role="group" aria-label="Your answer for Mystery game 1"><button type="button">Reverse space invaders</button><button type="button">Whac-a-mole</button><button type="button">Middle-row shooter</button></div>
 <p class="wgq-fb"><span class="wgq-why">The reward targets are nine fixed spots in a three-by-three grid: the holes the moles pop out of.</span></p>
 </div>
 <div class="wgq-q">
 <p class="wgq-qlabel">Mystery game 2</p>
 <div class="wgq-map"><img src="images/weights-7.png" width="1081" height="249" loading="lazy" decoding="async" alt="First-layer weight maps for mystery game 2, one panel per input channel" width="1000"></div>
-<div class="wgq-opts" role="group" aria-label="Your answer for Mystery game 2"><button type="button">Reverse Space Invaders with gravity</button><button type="button">Whac-A-Mole</button><button type="button">Middle-row shooter with diving targets</button></div>
+<div class="wgq-opts" role="group" aria-label="Your answer for Mystery game 2"><button type="button">Reverse space invaders</button><button type="button">Whac-a-mole</button><button type="button">Middle-row shooter</button></div>
 <p class="wgq-fb"><span class="wgq-why">The agent only ever appears in one row across the middle of the board.</span></p>
 </div>
 <div class="wgq-q">
 <p class="wgq-qlabel">Mystery game 3</p>
 <div class="wgq-map"><img src="images/weights-8.png" width="1081" height="250" loading="lazy" decoding="async" alt="First-layer weight maps for mystery game 3, one panel per input channel" width="1000"></div>
-<div class="wgq-opts" role="group" aria-label="Your answer for Mystery game 3"><button type="button">Reverse Space Invaders with gravity</button><button type="button">Whac-A-Mole</button><button type="button">Middle-row shooter with diving targets</button></div>
+<div class="wgq-opts" role="group" aria-label="Your answer for Mystery game 3"><button type="button">Reverse space invaders</button><button type="button">Whac-a-mole</button><button type="button">Middle-row shooter</button></div>
 <p class="wgq-fb"><span class="wgq-why">The reward targets fill a single row near the bottom, where things land.</span></p>
 </div>
 <p class="wgq-score" aria-live="polite">Answered 0 of 3.</p>
