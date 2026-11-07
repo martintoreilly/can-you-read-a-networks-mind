@@ -34,8 +34,8 @@ main { max-width: 60rem; margin: 0 auto; padding: 2.5rem max(1.25rem, env(safe-a
   --wgq-right:#6fd79b; --wgq-right-bg:#12301f; --wgq-wrong:#ff9384; --wgq-wrong-bg:#3b1915; --wgq-focus:#a77bff; --wgq-accent:#7c3cff; }
 :root[data-theme="dark"] .wgq.wgq .wgq-opts button { border-color:#4a4a57; }
 :root[data-theme="dark"] .wgq.wgq .wgq-revealed .wgq-score { color:#b796ff; }
-.site-foot { max-width: 60rem; margin: 0 auto; padding: 0 1.25rem 3rem; font-size: .85rem; opacity: .7; }
-.site-foot p { margin: 0; border-top: 1px solid currentColor; border-color: rgba(127,127,127,.3); padding-top: 1.25rem; }
+.site-foot { max-width: 60rem; margin: 0 auto; padding: 0 1.25rem calc(2.5rem + env(safe-area-inset-bottom, 0px)); font-size: .8rem; line-height: 1.5; opacity: .75; }
+.site-foot p { margin: 0; padding-top: 1.25rem; border-top: 1px solid rgba(127,127,127,.3); }
 </style>
 </head>
 <body>
@@ -86,6 +86,21 @@ main { max-width: 60rem; margin: 0 auto; padding: 2.5rem max(1.25rem, env(safe-a
 .wgq.wgq .wgq-game img { display: block; width: 100%; max-width: 100%; height: auto; margin: 0; border: 0; border-radius: 6px; }
 .wgq.wgq .wgq-game figcaption { margin: .6em 0 0; font-size: .9em; line-height: 1.45; }
 @media (max-width: 40em) { .wgq.wgq .wgq-title { font-size: 1.8em; } .wgq.wgq .wgq-sec h3 { font-size: 1.35em; } }
+/* Option 3: rearrange on small screens instead of scrolling */
+.wgq.wgq .wgq-map.wgq-panels { overflow: visible; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; }
+.wgq.wgq .wgq-map.wgq-panels img { display: block; width: 100%; min-width: 0; max-width: 100%; height: auto; }
+.wgq.wgq .wgq-games-scroll { overflow: visible; }
+.wgq.wgq .wgq-games { min-width: 0; }
+@media (max-width: 700px) {
+  .wgq.wgq .wgq-map.wgq-panels { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: .5em; }
+  .wgq.wgq .wgq-games.wgq-games-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1em; }
+  .wgq.wgq .wgq-games-4 .wgq-game:nth-child(n+3) .wgq-game-name { margin-top: 1.25em; }
+}
+@media (max-width: 440px) {
+  .wgq.wgq .wgq-map.wgq-panels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wgq.wgq .wgq-games { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1em; }
+  .wgq.wgq .wgq-games .wgq-game:nth-child(n+3) .wgq-game-name { margin-top: 1.25em; }
+}
 </style>
 <h2 class="wgq-title">Can you read a network’s mind?</h2>
 <p class="wgq-intro">Researchers at MIT’s CSAIL lab recently <a href="https://rikiyat.github.io/blog/weight-space-programming/">posted some intriguing early experiments</a> on something they are calling weight-space programming, where a large language model (LLM), a particular type of extremely large neural network, directly reads, writes and edits much smaller neural networks. These experiments became the main topic of lunchtime conversation for several of us at Turing this week, and we’ve shared some of our initial thoughts in a <a href="https://www.turing.ac.uk/news/publications/replicating-weight-space-programming-writing-and-reading-neural-network-weights">working note</a>.</p>
@@ -95,34 +110,34 @@ main { max-width: 60rem; margin: 0 auto; padding: 2.5rem max(1.25rem, env(safe-a
 <h3>Which game is this network playing?</h3>
 <p class="wgq-lede">The MIT researchers show that <a href="https://openai.com/index/gpt-6-astra/">GPT-6 Astra</a>, OpenAI’s latest frontier LLM could name the game a small neural network had learned to play, from nothing but its raw weights (the strength of connections between nodes in the network). Here is the same evidence, drawn as pictures. Try it yourself and see how you do. The LLMs manage to name all 4 real games and don’t get fooled by the scrambled non-game.</p>
 <p class="wgq-lede">Each network learned to play one of four Atari-style games on a 10&nbsp;×&nbsp;10 board. For every cell of the board we show how big its first-layer weights are, one map per input channel; darker means bigger. Cells that never mattered in training stay pale, so each map is close to a record of where things appeared. One of the five is a scrambled control.</p>
-<div class="wgq-games-wrap"><p class="wgq-qlabel">The game choices</p><div class="wgq-games-scroll"><div class="wgq-games wgq-games-4"><figure class="wgq-game"><p class="wgq-game-name"><strong>Breakout</strong></p><img src="images/demo-breakout.gif" alt="Animated demo of Breakout: a blue paddle at the bottom bounces an orange ball up at two rows of green blocks." width="400" height="456" loading="lazy" decoding="async"><figcaption>You control a paddle at the bottom of the screen, bouncing a ball at rows of blocks at the top of the screen to destroy them and “break out”. You score points for each block you destroy.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Pong</strong></p><img src="images/demo-pong.gif" alt="Animated demo of Pong: two paddles on the left and right edges bounce an orange ball between them." width="400" height="456" loading="lazy" decoding="async"><figcaption>You control a paddle on one side of the screen, the computer controls the other. You bounce a ball between you, scoring points if you get the ball past the computer’s paddle.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Pac-Man</strong></p><img src="images/demo-pacman.gif" alt="Animated demo of Pac-Man: a yellow player moves through a maze of green food dots while red enemies chase it." width="400" height="456" loading="lazy" decoding="async"><figcaption>You move around a fixed maze, eating food strewn around the maze while avoiding enemies controlled by the computer. You score points for each piece of food you eat before you hit an enemy.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Freeway</strong></p><img src="images/demo-freeway.gif" alt="Animated demo of Freeway: a blue player at the bottom tries to cross lanes of red cars to reach the green strip at the top." width="400" height="456" loading="lazy" decoding="async"><figcaption>You are trying to cross a busy horizontal road with multiple lanes of busy traffic moving left to right. You start at the bottom of the screen and score points if you reach the top without getting hit by traffic.</figcaption></figure></div></div><p class="wgq-note">Game orders below have been randomised</p></div>
+<div class="wgq-games-wrap"><p class="wgq-qlabel">The game choices</p><div class="wgq-games-scroll"><div class="wgq-games wgq-games-4"><figure class="wgq-game"><p class="wgq-game-name"><strong>Breakout</strong></p><img src="images/demo-breakout.gif" alt="Animated demo of Breakout: a blue paddle at the bottom bounces an orange ball up at two rows of green blocks." width="400" height="456" decoding="async"><figcaption>You control a paddle at the bottom of the screen, bouncing a ball at rows of blocks at the top of the screen to destroy them and “break out”. You score points for each block you destroy.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Pong</strong></p><img src="images/demo-pong.gif" alt="Animated demo of Pong: two paddles on the left and right edges bounce an orange ball between them." width="400" height="456" decoding="async"><figcaption>You control a paddle on one side of the screen, the computer controls the other. You bounce a ball between you, scoring points if you get the ball past the computer’s paddle.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Pac-Man</strong></p><img src="images/demo-pacman.gif" alt="Animated demo of Pac-Man: a yellow player moves through a maze of green food dots while red enemies chase it." width="400" height="456" decoding="async"><figcaption>You move around a fixed maze, eating food strewn around the maze while avoiding enemies controlled by the computer. You score points for each piece of food you eat before you hit an enemy.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Freeway</strong></p><img src="images/demo-freeway.gif" alt="Animated demo of Freeway: a blue player at the bottom tries to cross lanes of red cars to reach the green strip at the top." width="400" height="456" decoding="async"><figcaption>You are trying to cross a busy horizontal road with multiple lanes of busy traffic moving left to right. You start at the bottom of the screen and score points if you reach the top without getting hit by traffic.</figcaption></figure></div></div><p class="wgq-note">Game orders below have been randomised</p></div>
 <div class="wgq-q">
 <p class="wgq-qlabel">Network 1</p>
-<div class="wgq-map"><img src="images/weights-1.png" width="1000" height="235" decoding="async" alt="First-layer weight maps for network 1, one panel per input channel" width="1000"></div>
+<div class="wgq-map wgq-panels" role="img" aria-label="First-layer weight maps for network 1, one panel per input channel"><img src="images/weights-1-ch0.png" alt="" width="199" height="235" decoding="async"><img src="images/weights-1-ch1.png" alt="" width="200" height="235" decoding="async"><img src="images/weights-1-ch2.png" alt="" width="201" height="235" decoding="async"><img src="images/weights-1-ch3.png" alt="" width="200" height="235" decoding="async"><img src="images/weights-1-ch4.png" alt="" width="200" height="235" decoding="async"></div>
 <div class="wgq-opts" role="group" aria-label="Your answer for Network 1"><button type="button">Breakout</button><button type="button">Pong</button><button type="button">Pac-Man</button><button type="button">Freeway</button><button type="button">None of them: it’s scrambled</button></div>
 <p class="wgq-fb"><span class="wgq-why">The agent map is a single column on the left edge: a paddle that only moves up and down.</span></p>
 </div>
 <div class="wgq-q">
 <p class="wgq-qlabel">Network 2</p>
-<div class="wgq-map"><img src="images/weights-2.png" width="1000" height="235" loading="lazy" decoding="async" alt="First-layer weight maps for network 2, one panel per input channel" width="1000"></div>
+<div class="wgq-map wgq-panels" role="img" aria-label="First-layer weight maps for network 2, one panel per input channel"><img src="images/weights-2-ch0.png" alt="" width="199" height="235" decoding="async"><img src="images/weights-2-ch1.png" alt="" width="200" height="235" decoding="async"><img src="images/weights-2-ch2.png" alt="" width="201" height="235" decoding="async"><img src="images/weights-2-ch3.png" alt="" width="200" height="235" decoding="async"><img src="images/weights-2-ch4.png" alt="" width="200" height="235" decoding="async"></div>
 <div class="wgq-opts" role="group" aria-label="Your answer for Network 2"><button type="button">Breakout</button><button type="button">Pong</button><button type="button">Pac-Man</button><button type="button">Freeway</button><button type="button">None of them: it’s scrambled</button></div>
 <p class="wgq-fb"><span class="wgq-why">The agent lives in a strip down the middle of the board, and the reward targets are one row at the top: a chicken crossing the road to reach the far side.</span></p>
 </div>
 <div class="wgq-q">
 <p class="wgq-qlabel">Network 3</p>
-<div class="wgq-map"><img src="images/weights-3.png" width="1000" height="235" loading="lazy" decoding="async" alt="First-layer weight maps for network 3, one panel per input channel" width="1000"></div>
+<div class="wgq-map wgq-panels" role="img" aria-label="First-layer weight maps for network 3, one panel per input channel"><img src="images/weights-3-ch0.png" alt="" width="199" height="235" decoding="async"><img src="images/weights-3-ch1.png" alt="" width="200" height="235" decoding="async"><img src="images/weights-3-ch2.png" alt="" width="201" height="235" decoding="async"><img src="images/weights-3-ch3.png" alt="" width="200" height="235" decoding="async"><img src="images/weights-3-ch4.png" alt="" width="200" height="235" decoding="async"></div>
 <div class="wgq-opts" role="group" aria-label="Your answer for Network 3"><button type="button">Breakout</button><button type="button">Pong</button><button type="button">Pac-Man</button><button type="button">Freeway</button><button type="button">None of them: it’s scrambled</button></div>
 <p class="wgq-fb"><span class="wgq-why">The agent map is a single row near the bottom (the paddle), and the reward targets sit in rows near the top (the bricks).</span></p>
 </div>
 <div class="wgq-q">
 <p class="wgq-qlabel">Network 4</p>
-<div class="wgq-map"><img src="images/weights-4.png" width="1000" height="235" loading="lazy" decoding="async" alt="First-layer weight maps for network 4, one panel per input channel" width="1000"></div>
+<div class="wgq-map wgq-panels" role="img" aria-label="First-layer weight maps for network 4, one panel per input channel"><img src="images/weights-4-ch0.png" alt="" width="199" height="235" decoding="async"><img src="images/weights-4-ch1.png" alt="" width="200" height="235" decoding="async"><img src="images/weights-4-ch2.png" alt="" width="201" height="235" decoding="async"><img src="images/weights-4-ch3.png" alt="" width="200" height="235" decoding="async"><img src="images/weights-4-ch4.png" alt="" width="200" height="235" decoding="async"></div>
 <div class="wgq-opts" role="group" aria-label="Your answer for Network 4"><button type="button">Breakout</button><button type="button">Pong</button><button type="button">Pac-Man</button><button type="button">Freeway</button><button type="button">None of them: it’s scrambled</button></div>
 <p class="wgq-fb"><span class="wgq-why">This is the control: Breakout’s network with its weights shuffled. The numbers are the same, but the picture is gone.</span></p>
 </div>
 <div class="wgq-q">
 <p class="wgq-qlabel">Network 5</p>
-<div class="wgq-map"><img src="images/weights-5.png" width="1000" height="235" loading="lazy" decoding="async" alt="First-layer weight maps for network 5, one panel per input channel" width="1000"></div>
+<div class="wgq-map wgq-panels" role="img" aria-label="First-layer weight maps for network 5, one panel per input channel"><img src="images/weights-5-ch0.png" alt="" width="199" height="235" decoding="async"><img src="images/weights-5-ch1.png" alt="" width="200" height="235" decoding="async"><img src="images/weights-5-ch2.png" alt="" width="201" height="235" decoding="async"><img src="images/weights-5-ch3.png" alt="" width="200" height="235" decoding="async"><img src="images/weights-5-ch4.png" alt="" width="200" height="235" decoding="async"></div>
 <div class="wgq-opts" role="group" aria-label="Your answer for Network 5"><button type="button">Breakout</button><button type="button">Pong</button><button type="button">Pac-Man</button><button type="button">Freeway</button><button type="button">None of them: it’s scrambled</button></div>
 <p class="wgq-fb"><span class="wgq-why">The agent and the moving objects trace the same loops of corridors: a maze.</span></p>
 </div>
@@ -132,22 +147,22 @@ main { max-width: 60rem; margin: 0 auto; padding: 2.5rem max(1.25rem, env(safe-a
 <section class="wgq-sec">
 <h3>Three games nobody has seen before</h3>
 <p class="wgq-lede">We invented three new games, so no model could have read about them, and trained a network on each. Match the network to the game. In these new games, the LLMs can guess the structure but struggle to identify the dynamics.</p>
-<div class="wgq-games-wrap"><p class="wgq-qlabel">The game choices</p><div class="wgq-games-scroll"><div class="wgq-games"><figure class="wgq-game"><p class="wgq-game-name"><strong>Reverse space invaders</strong></p><img src="images/demo-reverse-space-invaders.gif" alt="Animated demo of Reverse space invaders: a round asteroid falls down an 8 by 8 grid towards a yellow triangular ship at the bottom." width="400" height="456" loading="lazy" decoding="async"><figcaption>In a reversal of roles, you play the asteroids, trying to hit the planet surface while avoiding the missiles being shot up by the defending space ship. You score points for each asteroid that hits the ground without getting shot.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Whac-a-mole</strong></p><img src="images/demo-whac-a-mole.gif" alt="Animated demo of Whac-a-mole: a small square hammer moves around a grid of nine holes as moles pop up." width="400" height="456" loading="lazy" decoding="async"><figcaption>You move a hammer around to hit the moles popping up out of one of several holes, scoring points for each mole you hit.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Middle-row shooter</strong></p><img src="images/demo-middle-row-shooter.gif" alt="Animated demo of Middle-row shooter: a blue square moves along the middle row of the grid, shooting at targets diving from above and below." width="400" height="456" loading="lazy" decoding="async"><figcaption>You play a spaceship moving left and right in the middle of the screen, shooting at enemies diving at you from above and below, scoring points for each enemy you hit before an enemy crashes into you.</figcaption></figure></div></div><p class="wgq-note">Game orders below have been randomised</p></div>
+<div class="wgq-games-wrap"><p class="wgq-qlabel">The game choices</p><div class="wgq-games-scroll"><div class="wgq-games"><figure class="wgq-game"><p class="wgq-game-name"><strong>Reverse space invaders</strong></p><img src="images/demo-reverse-space-invaders.gif" alt="Animated demo of Reverse space invaders: a round asteroid falls down an 8 by 8 grid towards a yellow triangular ship at the bottom." width="400" height="456" decoding="async"><figcaption>In a reversal of roles, you play the asteroids, trying to hit the planet surface while avoiding the missiles being shot up by the defending space ship. You score points for each asteroid that hits the ground without getting shot.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Whac-a-mole</strong></p><img src="images/demo-whac-a-mole.gif" alt="Animated demo of Whac-a-mole: a small square hammer moves around a grid of nine holes as moles pop up." width="400" height="456" decoding="async"><figcaption>You move a hammer around to hit the moles popping up out of one of several holes, scoring points for each mole you hit.</figcaption></figure><figure class="wgq-game"><p class="wgq-game-name"><strong>Middle-row shooter</strong></p><img src="images/demo-middle-row-shooter.gif" alt="Animated demo of Middle-row shooter: a blue square moves along the middle row of the grid, shooting at targets diving from above and below." width="400" height="456" decoding="async"><figcaption>You play a spaceship moving left and right in the middle of the screen, shooting at enemies diving at you from above and below, scoring points for each enemy you hit before an enemy crashes into you.</figcaption></figure></div></div><p class="wgq-note">Game orders below have been randomised</p></div>
 <div class="wgq-q">
 <p class="wgq-qlabel">Mystery game 1</p>
-<div class="wgq-map"><img src="images/weights-6.png" width="1081" height="249" loading="lazy" decoding="async" alt="First-layer weight maps for mystery game 1, one panel per input channel" width="1000"></div>
+<div class="wgq-map wgq-panels" role="img" aria-label="First-layer weight maps for mystery game 1, one panel per input channel"><img src="images/weights-6-ch0.png" alt="" width="215" height="249" decoding="async"><img src="images/weights-6-ch1.png" alt="" width="216" height="249" decoding="async"><img src="images/weights-6-ch2.png" alt="" width="218" height="249" decoding="async"><img src="images/weights-6-ch3.png" alt="" width="216" height="249" decoding="async"><img src="images/weights-6-ch4.png" alt="" width="216" height="249" decoding="async"></div>
 <div class="wgq-opts" role="group" aria-label="Your answer for Mystery game 1"><button type="button">Reverse space invaders</button><button type="button">Whac-a-mole</button><button type="button">Middle-row shooter</button></div>
 <p class="wgq-fb"><span class="wgq-why">The reward targets are nine fixed spots in a three-by-three grid: the holes the moles pop out of.</span></p>
 </div>
 <div class="wgq-q">
 <p class="wgq-qlabel">Mystery game 2</p>
-<div class="wgq-map"><img src="images/weights-7.png" width="1081" height="249" loading="lazy" decoding="async" alt="First-layer weight maps for mystery game 2, one panel per input channel" width="1000"></div>
+<div class="wgq-map wgq-panels" role="img" aria-label="First-layer weight maps for mystery game 2, one panel per input channel"><img src="images/weights-7-ch0.png" alt="" width="215" height="249" decoding="async"><img src="images/weights-7-ch1.png" alt="" width="216" height="249" decoding="async"><img src="images/weights-7-ch2.png" alt="" width="218" height="249" decoding="async"><img src="images/weights-7-ch3.png" alt="" width="216" height="249" decoding="async"><img src="images/weights-7-ch4.png" alt="" width="216" height="249" decoding="async"></div>
 <div class="wgq-opts" role="group" aria-label="Your answer for Mystery game 2"><button type="button">Reverse space invaders</button><button type="button">Whac-a-mole</button><button type="button">Middle-row shooter</button></div>
 <p class="wgq-fb"><span class="wgq-why">The agent only ever appears in one row across the middle of the board.</span></p>
 </div>
 <div class="wgq-q">
 <p class="wgq-qlabel">Mystery game 3</p>
-<div class="wgq-map"><img src="images/weights-8.png" width="1081" height="250" loading="lazy" decoding="async" alt="First-layer weight maps for mystery game 3, one panel per input channel" width="1000"></div>
+<div class="wgq-map wgq-panels" role="img" aria-label="First-layer weight maps for mystery game 3, one panel per input channel"><img src="images/weights-8-ch0.png" alt="" width="215" height="250" decoding="async"><img src="images/weights-8-ch1.png" alt="" width="216" height="250" decoding="async"><img src="images/weights-8-ch2.png" alt="" width="218" height="250" decoding="async"><img src="images/weights-8-ch3.png" alt="" width="216" height="250" decoding="async"><img src="images/weights-8-ch4.png" alt="" width="216" height="250" decoding="async"></div>
 <div class="wgq-opts" role="group" aria-label="Your answer for Mystery game 3"><button type="button">Reverse space invaders</button><button type="button">Whac-a-mole</button><button type="button">Middle-row shooter</button></div>
 <p class="wgq-fb"><span class="wgq-why">The reward targets fill a single row near the bottom, where things land.</span></p>
 </div>
@@ -160,6 +175,50 @@ main { max-width: 60rem; margin: 0 auto; padding: 2.5rem max(1.25rem, env(safe-a
   // All quiz state lives in the page (aria-pressed and classes), and clicks are handled by one
   // shared listener, so the quiz behaves the same even if the CMS runs this script more than once.
   var KEY = [[1, 3, 0, 4, 2], [1, 2, 0]];
+
+  // ---- Anonymous result saving to a Google Form ----
+  // Each finished section is sent as one form response. No names, emails or cookies:
+  // just a random ID kept in this browser so repeat attempts can be told apart.
+  var FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdXsOry1our_hlrPOoxWOHeTKAXvYZ6MzprioJczEQbsVddpA/formResponse';
+  var FIELDS = {
+    section: 'entry.2004635395', visitor: 'entry.1011594320', attempt: 'entry.94632454',
+    score: 'entry.1157514089', outOf: 'entry.1442724208',
+    pick: ['entry.2020459495', 'entry.521878989', 'entry.2074210174', 'entry.1932770049', 'entry.394346446'],
+    correct: ['entry.1925813976', 'entry.402597097', 'entry.193103425', 'entry.1750229551', 'entry.2074459888']
+  };
+  var CODES = { 'Breakout': 'breakout', 'Pong': 'pong', 'Pac-Man': 'pacman', 'Freeway': 'freeway',
+    'None of them: it’s scrambled': 'scrambled', 'Reverse space invaders': 'invaders',
+    'Whac-a-mole': 'whac', 'Middle-row shooter': 'shooter' };
+  function rid() {
+    try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) {}
+    return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12);
+  }
+  var visitorId = (function () {
+    try {
+      var v = localStorage.getItem('wgq-visitor');
+      if (!v) { v = rid(); localStorage.setItem('wgq-visitor', v); }
+      return v;
+    } catch (e) { return rid(); }
+  })();
+  if (!window.__wgqAttempt) window.__wgqAttempt = rid();
+  function sendResult(sec, qs, picks, right) {
+    try {
+      var root = sec.closest('.wgq');
+      var body = new URLSearchParams();
+      body.append(FIELDS.section, 'part' + (all(root, '.wgq-sec').indexOf(sec) + 1));
+      body.append(FIELDS.visitor, visitorId);
+      body.append(FIELDS.attempt, window.__wgqAttempt);
+      body.append(FIELDS.score, String(right));
+      body.append(FIELDS.outOf, String(qs.length));
+      var key = keyFor(sec);
+      qs.forEach(function (q, qi) {
+        var label = buttonsOf(q)[picks[qi]].textContent.trim();
+        body.append(FIELDS.pick[qi], CODES[label] || 'unknown');
+        body.append(FIELDS.correct[qi], picks[qi] === key[qi] ? '1' : '0');
+      });
+      fetch(FORM_URL, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {});
+    } catch (e) {}
+  }
 
   function all(el, sel) { return Array.prototype.slice.call(el.querySelectorAll(sel)); }
   function buttonsOf(q) { return all(q, '.wgq-opts button'); }
@@ -234,9 +293,11 @@ main { max-width: 60rem; margin: 0 auto; padding: 2.5rem max(1.25rem, env(safe-a
       if (ok) right++;
     });
     scoreOf(sec).textContent = 'Your score: ' + right + ' out of ' + qs.length;
+    sendResult(sec, qs, picks, right);
   }
 
   function resetRoot(root) {
+    window.__wgqAttempt = rid();
     all(root, '.wgq-sec').forEach(function (sec) {
       sec.classList.remove('wgq-revealed');
       all(sec, '.wgq-q').forEach(function (q) {
@@ -293,5 +354,6 @@ main { max-width: 60rem; margin: 0 auto; padding: 2.5rem max(1.25rem, env(safe-a
 </div>
 
 </main>
+<footer class="site-foot"><p>This page anonymously logs your choices to help us understand how well humans do at this task. No identifying information is collected.</p></footer>
 </body>
 </html>
